@@ -1,11 +1,8 @@
 import React, {Component} from 'react';
-
 import {Terminal as XTerm} from 'xterm';
 import 'xterm/dist/xterm.css';
-
 import {Client} from 'ssh2';
-
-import {bind} from 'decko';
+import {bind, debounce} from 'decko';
 
 XTerm.applyAddon(require('xterm/dist/addons/fit/fit'));
 
@@ -57,6 +54,7 @@ export default class Terminal extends Component {
   }
 
   @bind
+  @debounce
   resize() {
     if (this.xterm)
       this.xterm.fit();
@@ -67,7 +65,7 @@ export default class Terminal extends Component {
 
   render() {
     return (
-      <div style={{height: '100vh'}} ref={termElement => this.termElement = termElement}/>
+      <div ref={termElement => this.termElement = termElement}/>
     );
   }
 }

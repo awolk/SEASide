@@ -1,24 +1,24 @@
 import React, {Component} from 'react';
-import {Select} from 'material-ui';
+import {Dropdown} from 'semantic-ui-react';
 import {bind} from 'decko';
 
 import serverConfig from '../config/servers.json';
 
 export default class ServerSelector extends Component {
   @bind
-  handleChange(event, index, selection) {
-    alert(selection);
+  handleChange(event, data) {
     if (this.props.onChange)
-      this.props.onChange(selection);
+      this.props.onChange(data.value);
   }
 
   render() {
+    const items = serverConfig.servers.map(server => ({text: server.name, value: server.address}));
     return (
-      <Select native value={this.props.selection} onChange={this.handleChange}>
-        {serverConfig.servers.map((server, i) => (
-          <option key={i} value={server.address}>{server.name}</option>
-        ))}
-      </Select>
+      <Dropdown fluid selection
+                value={this.props.selection}
+                options={items}
+                onChange={this.handleChange}
+      />
     );
   }
 }

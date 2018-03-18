@@ -1,9 +1,7 @@
 import React, {Component} from 'react';
-import {Button} from 'material-ui';
+import {Button, Grid} from 'semantic-ui-react';
 import ServerSelector from './ServerSelector';
-
 import {bind} from 'decko';
-
 import serverConfig from '../config/servers.json';
 
 export default class ConnectionMenu extends Component {
@@ -24,16 +22,16 @@ export default class ConnectionMenu extends Component {
 
   render() {
     return (
-      <div>
-        <Button
-          variant="raised"
-          color="primary"
-          onClick={this.handleClick}
-        >
-          Connect
-        </Button>
-        <ServerSelector selection={this.state.server} onChange={this.handleChange} />
-      </div>
+      <Grid.Row columns={2}>
+        <Grid.Column>
+          <Button fluid onClick={this.handleClick}>
+            Connect
+          </Button>
+        </Grid.Column>
+        <Grid.Column>
+          <ServerSelector selection={this.state.server} onChange={this.handleChange}/>
+        </Grid.Column>
+      </Grid.Row>
     );
   }
 }
