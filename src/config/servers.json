@@ -1,0 +1,10 @@
+{
+  "servers": [
+    {"name": "lnxsrv", "address": "lnxsrv.seas.ucla.edu"},
+    {"name": "lnxsrv06", "address": "lnxsrv06.seas.ucla.edu"},
+    {"name": "lnxsrv07", "address": "lnxsrv07.seas.ucla.edu"},
+    {"name": "lnxsrv08", "address": "lnxsrv08.seas.ucla.edu"},
+    {"name": "lnxsrv09", "address": "lnxsrv09.seas.ucla.edu"}
+  ],
+  "defaultServer": "lnxsrv.seas.ucla.edu"
+}
