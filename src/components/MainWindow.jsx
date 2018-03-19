@@ -4,6 +4,7 @@ import {Grid} from 'semantic-ui-react';
 import ConnectionMenu from './ConnectionMenu';
 import Terminal from './Terminal';
 import serverConfig from '../config/servers.json';
+import {bind} from 'decko';
 
 export default class MainWindow extends Component {
   state = {
@@ -11,15 +12,26 @@ export default class MainWindow extends Component {
     serverSelection: serverConfig.defaultServer
   };
 
+  @bind
+  handleConnect(server) {
+    const newTab = <Terminal
+      key={this.state.tabs.length}
+      host={server}
+      username=''
+      password=''
+    />;
+    this.setState({
+      tabs: this.state.tabs.concat(newTab)
+    });
+  }
+
   render() {
     return (
       <div>
         <Grid padded>
-          <ConnectionMenu/>
+          <ConnectionMenu onConnect={this.handleConnect}/>
           <Grid.Row stretched>
-            <Terminal
-              host='lnxsrv07.seas.ucla.edu' username='' password=''
-            />
+            {this.state.tabs}
           </Grid.Row>
         </Grid>
       </div>

@@ -1,13 +1,12 @@
 {
-  "name": "seaside",
-  "version": "0.1.0",
+  "name": "SEASide",
+  "version": "0.0.1",
   "private": true,
   "dependencies": {
     "babel-plugin-transform-decorators-legacy": "^1.3.4",
     "concurrently": "^3.5.1",
     "cross-env": "^5.1.4",
     "decko": "^1.2.0",
-    "electron": "^1.8.3",
     "electron-is-dev": "^0.3.0",
     "react": "^16.2.0",
     "react-app-rewired": "^1.5.0",
@@ -19,17 +18,32 @@
     "wait-on": "^2.1.0",
     "xterm": "^3.2.0"
   },
+  "devDependencies": {
+    "electron": "^1.8.3",
+    "electron-builder": "^20.5.1",
+    "react-addons-css-transition-group": "^15.6.2"
+  },
   "scripts": {
     "react-start": "cross-env BROWSER=none react-app-rewired start",
     "react-build": "react-app-rewired build",
     "react-test": "react-app-rewired test --env=jsdom",
     "react-eject": "react-app-rewired eject",
     "electron-start": "electron .",
-    "start": "concurrently 'yarn react-start' 'wait-on http://localhost:3000 && yarn electron-start'"
+    "start": "concurrently 'yarn react-start' 'wait-on http://localhost:3000 && yarn electron-start'",
+    "preelectron-build": "yarn react-build",
+    "electron-build": "build"
+
+  },
+  "build": {
+    "appId": "seaside",
+    "productName": "SEASide",
+    "files": [
+      "build/**/*"
+    ],
+    "directories": {
+      "buildResources": "assets"
+    }
   },
   "homepage": "./",
-  "main": "src/electron-start.js",
-  "devDependencies": {
-    "react-addons-css-transition-group": "^15.6.2"
-  }
+  "main": "public/electron.js"
 }
