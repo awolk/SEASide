@@ -5,8 +5,7 @@ import {bind} from 'decko';
 import serverConfig from '../config/servers.json';
 
 export default class ServerSelector extends Component {
-  @bind
-  handleChange(event, data) {
+  @bind handleChange(event, data) {
     if (this.props.onChange)
       this.props.onChange(data.value);
   }

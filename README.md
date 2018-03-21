@@ -18,7 +18,7 @@ the UCLA SEASnet servers as easy as possible.
   test/build the application
 - *public/index.html* - Principal web page to host the React app
 - *src* - Holds main source of application
-    - *electron-start.js* - Electron's launch point, opens the main
+    - *electron.js* - Electron's launch point, opens the main
       window and controls the application
     - *index.css* - Global CSS to affect all pages
     - *index.js* - React's launch point

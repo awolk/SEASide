@@ -8,6 +8,9 @@
     "cross-env": "^5.1.4",
     "decko": "^1.2.0",
     "electron-is-dev": "^0.3.0",
+    "keypair": "^1.0.1",
+    "mkdirp": "^0.5.1",
+    "node-forge": "^0.7.4",
     "react": "^16.2.0",
     "react-app-rewired": "^1.5.0",
     "react-dom": "^16.2.0",
@@ -32,7 +35,6 @@
     "start": "concurrently 'yarn react-start' 'wait-on http://localhost:3000 && yarn electron-start'",
     "preelectron-build": "yarn react-build",
     "electron-build": "build"
-
   },
   "build": {
     "appId": "seaside",

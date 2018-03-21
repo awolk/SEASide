@@ -9,14 +9,12 @@ export default class ConnectionMenu extends Component {
     server: serverConfig.defaultServer
   };
 
-  @bind
-  handleClick() {
+  @bind handleClick() {
     if (this.props.onConnect)
       this.props.onConnect(this.state.server);
   }
 
-  @bind
-  handleChange(server) {
+  @bind handleChange(server) {
     this.setState({server});
   }
 

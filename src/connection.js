@@ -1,5 +1,41 @@
 import {EventEmitter} from 'events';
 import {Client} from 'ssh2';
+import keypair from 'keypair';
+import forge from 'node-forge';
+import mkdirp from 'mkdirp';
+import os from 'os';
+import path from 'path';
+import fs from 'fs';
+
+const keyDir = path.join(os.homedir(), '.ssh');
+mkdirp.sync(keyDir); // make ~/.ssh folder if necessary
+const privKeyPath = path.join(keyDir, 'seaside_rsa');
+const pubKeyPath = path.join(keyDir, 'seaside_rsa.pub');
+
+function getPublicKey() {
+  return new Promise((resolve, reject) => {
+    if (fs.existsSync(privKeyPath) && fs.existsSync(pubKeyPath)) {
+      // The keypair exists
+      fs.readFile(pubKeyPath, (err, contents) => {
+        if (err) return reject(err);
+        resolve(contents);
+      });
+    } else {
+      // create the keypair
+      const pair = keypair({bits: 2048});
+      const pubKey = forge.pki.publicKeyFromPem(pair.public);
+      const pubKeyText = forge.ssh.publicKeyToOpenSSH(pubKey, 'seaside');
+      // save the keypair
+      fs.writeFile(privKeyPath, pair.private, err => {
+        if (err) return reject(err);
+        fs.writeFile(pubKeyPath, pubKeyText, err => {
+          if (err) return reject(err);
+          resolve(pubKeyText);
+        });
+      });
+    }
+  });
+}
 
 export default class Connection extends EventEmitter {
   constructor(server) {

@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {Terminal as XTerm} from 'xterm';
 import 'xterm/dist/xterm.css';
-import Connection from '../connection';
 import {bind, debounce} from 'decko';
 
 XTerm.applyAddon(require('xterm/dist/addons/fit/fit'));
@@ -13,15 +12,13 @@ export default class Terminal extends Component {
     this.xterm = xterm;
     xterm.open(this.termElement);
     this.resize();
-    // Open connection
-    this.connection = new Connection(this.props.host);
-    this.connection.on('data', data => {
-      xterm.write(data);
+    // Receive data from connection
+    this.props.connection.on('data', data => {
+      this.xterm.write(data);
     });
-    this.connection.attemptLogin(this.props.username, this.props.password);
 
     this.xterm.on('data', key => {
-      this.connection.write(key);
+      this.props.connection.write(key);
     });
     window.addEventListener('resize', this.resize);
   }
@@ -34,12 +31,11 @@ export default class Terminal extends Component {
     window.removeEventListener('resize', this.resize);
   }
 
-  @bind
-  @debounce
+  @bind @debounce
   resize() {
     if (this.xterm)
       this.xterm.fit();
-    this.connection.resize(this.xterm.rows, this.xterm.cols);
+    this.props.connection.resize(this.xterm.rows, this.xterm.cols);
   }
 
 
