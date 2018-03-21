@@ -14,23 +14,34 @@ the UCLA SEASnet servers as easy as possible.
 - To test run `yarn start`
 
 ## File Structure
-- *package.json* - Description of dependencies and scripts to
-  test/build the application
-- *public/index.html* - Principal web page to host the React app
-- *src* - Holds main source of application
+- *assets/* - Holds images needed for application
+- *public/* - holds files to be copied to the build directory
+    - *index.html* - Principal web page to host the React app
     - *electron.js* - Electron's launch point, opens the main
-      window and controls the application
+- *src/* - Holds main source of application
+    window and controls the application
+    - *components/* - React components
+        - *ConnectionMenu.jsx* - Holds connection button and server
+          selector
+        - *FileExplorer.jsx* - File explorer component
+        - *Loader.jsx* - Establishes SSH connection while loading
+        - *Login.jsx* - User login credentials form
+        - *MainWindow.jsx* - The main application view
+        - *MasterTab.jsx* - Individual tab component
+        - *ServerSelector.jsx* - Server selection component
+        - *Terminal.jsx* - Terminal emulator
+    - *config/* - Configuration files
+        - *servers.json* - a list of selectable servers to connect to
+    - *App.js* - The main React component
+    - *App.test.js* - Tests for *App.js*
+    - *connection.js* - interface for SSH connection to SEASnet
     - *index.css* - Global CSS to affect all pages
     - *index.js* - React's launch point
     - *registerServiceWorker.js* - utility from `create-react-app`
-    - *App.js* - The main React component
-    - *App.test.js* - Tests for *App.js*
-    - *config* - Configuration files
-        - *servers.json* - a list of selectable servers to connect to
-    - *components* - React components
-        - *MainWindow.jsx* - The main application view
-        - *ServerSelector.jsx* - Server selection component
-        - *Terminal.jsx* - Terminal emulator
+- *config-overrides.js* - change default configuration of webpack
+  from `create-react-app`
+- *package.json* - Description of dependencies and scripts to
+  test/build the application
 
 ## Contributing
 General Guidelines:
