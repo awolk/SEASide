@@ -1,4 +1,6 @@
-import {EventEmitter} from 'events';
+// @flow
+
+import EventEmitter from 'events';
 import {Client} from 'ssh2';
 import keypair from 'keypair';
 import forge from 'node-forge';
@@ -12,13 +14,13 @@ mkdirp.sync(keyDir); // make ~/.ssh folder if necessary
 const privKeyPath = path.join(keyDir, 'seaside_rsa');
 const pubKeyPath = path.join(keyDir, 'seaside_rsa.pub');
 
-function getPublicKey() {
+function getPublicKey(): Promise<string> {
   return new Promise((resolve, reject) => {
     if (fs.existsSync(privKeyPath) && fs.existsSync(pubKeyPath)) {
       // The keypair exists
       fs.readFile(pubKeyPath, (err, contents) => {
         if (err) return reject(err);
-        resolve(contents);
+        resolve(contents.toString());
       });
     } else {
       // create the keypair
@@ -38,13 +40,17 @@ function getPublicKey() {
 }
 
 export default class Connection extends EventEmitter {
-  constructor(server) {
+  server: string;
+  client: Client;
+  stream: ?*;
+
+  constructor(server: string) {
     super();
     this.server = server;
     this.client = new Client();
   }
 
-  attemptLogin(username, password) {
+  attemptLogin(username: string, password: string): Promise<*> {
     return new Promise((resolve, reject) => {
       this.client.on('error', err => {
         // Authentication failed
@@ -64,17 +70,17 @@ export default class Connection extends EventEmitter {
     });
   }
 
-  write(data) {
+  write(data: string) {
     if (this.stream)
       this.stream.write(data);
   }
 
-  resize(rows, cols) {
+  resize(rows: number, cols: number) {
     if (this.stream)
       this.stream.setWindow(rows, cols, 0, 0);
   }
 
-  initializeShell() {
+  initializeShell(): Promise<void> {
     return new Promise((resolve, reject) => {
       this.client.shell({
           term: 'xterm-256color',
@@ -85,7 +91,7 @@ export default class Connection extends EventEmitter {
           if (err) return reject(err);
 
           stream.on('data', (data) => {
-            this.emit('data', data.toString('utf-8'));
+            this.emit('data', data.toString());
           });
           stream.on('close', () => {
             this.stream = null;

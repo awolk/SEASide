@@ -1,20 +1,28 @@
+// @flow
 import React, {Component} from 'react';
 import {Button, Grid} from 'semantic-ui-react';
 import ServerSelector from './ServerSelector';
 import {bind} from 'decko';
 import serverConfig from '../config/servers.json';
 
-export default class ConnectionMenu extends Component {
+type Props = {
+  onConnect: (server: string) => void,
+};
+
+type State = {
+  server: string
+};
+
+export default class ConnectionMenu extends Component<Props, State> {
   state = {
     server: serverConfig.defaultServer
   };
 
   @bind handleClick() {
-    if (this.props.onConnect)
-      this.props.onConnect(this.state.server);
+    this.props.onConnect(this.state.server);
   }
 
-  @bind handleChange(server) {
+  @bind handleChange(server: string) {
     this.setState({server});
   }
 

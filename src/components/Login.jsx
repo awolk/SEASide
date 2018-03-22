@@ -1,31 +1,44 @@
+// @flow
 import React, { Component } from 'react';
 import { Message, Input, Form, Grid } from 'semantic-ui-react';
 import { bind } from 'decko';
 
-export default class Login extends Component {
+type Props = {
+  error: ?string,
+  attemptLogin: (username: string, password: string) => void
+};
+
+type State = {
+  username: string,
+  password: string
+};
+
+export default class Login extends Component<Props, State> {
   state = {
     username: '',
     password: ''
   };
 
-  @bind handleUsername(evt) {
-    this.setState({username: evt.target.value})
+  inputRef: ?HTMLInputElement;
+
+  @bind handleUsername({ currentTarget }: SyntheticInputEvent<HTMLInputElement>) {
+    this.setState({username: currentTarget.value})
   }
 
-  @bind handlePassword(evt) {
-    this.setState({password: evt.target.value})
+  @bind handlePassword({ currentTarget }: SyntheticInputEvent<HTMLInputElement>) {
+    this.setState({password: currentTarget.value})
   }
 
-  @bind handleLogin(evt) {
+  @bind handleLogin(evt: SyntheticEvent<HTMLButtonElement>) {
     if (!this.state.username)
       return; // Form will highlight required username field automatically
     evt.preventDefault();
-    if (this.props.attemptLogin)
-      this.props.attemptLogin(this.state.username, this.state.password);
+    this.props.attemptLogin(this.state.username, this.state.password);
   }
 
   componentDidMount() {
-    this.inputRef.focus();
+    if (this.inputRef)
+      this.inputRef.focus();
   }
 
   render() {

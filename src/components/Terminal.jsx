@@ -1,16 +1,24 @@
+// @flow
 import React, {Component} from 'react';
 import {Terminal as XTerm} from 'xterm';
 import 'xterm/dist/xterm.css';
 import {bind, debounce} from 'decko';
+import Connection from "../connection";
 
 XTerm.applyAddon(require('xterm/dist/addons/fit/fit'));
 
-export default class Terminal extends Component {
+type Props = {
+  connection: Connection
+};
+
+export default class Terminal extends Component<Props> {
+  xterm: XTerm;
+  termElement: ?HTMLDivElement;
+
   componentDidMount() {
     // Create XTerm element
-    const xterm = new XTerm();
-    this.xterm = xterm;
-    xterm.open(this.termElement);
+    this.xterm = new XTerm();
+    this.xterm.open(this.termElement);
     this.resize();
     // Receive data from connection
     this.props.connection.on('data', data => {

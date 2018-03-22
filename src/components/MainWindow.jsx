@@ -1,3 +1,4 @@
+// @flow
 import React, {Component} from 'react';
 import 'semantic-ui-css/semantic.min.css';
 import { Grid, Tab } from 'semantic-ui-react';
@@ -6,22 +7,24 @@ import MasterTab from "./MasterTab";
 import serverConfig from '../config/servers.json';
 import {bind} from 'decko';
 
-export default class MainWindow extends Component {
+type State = {
+  tabs: Array<*>,
+  serverSelection: string,
+  tabIndex: number
+};
+
+export default class MainWindow extends Component<{}, State> {
   state = {
     tabs: [],
     serverSelection: serverConfig.defaultServer,
     tabIndex: 0
   };
 
-  constructor(props) {
-    super(props);
-  }
-
   componentDidMount() {
     this.handleConnect(serverConfig.defaultServer);
   }
 
-  @bind handleConnect(server) {
+  @bind handleConnect(server: string) {
     const newTab = <MasterTab host={server}/>;
     this.setState({
       tabs: this.state.tabs.concat({
@@ -35,7 +38,7 @@ export default class MainWindow extends Component {
     });
   }
 
-  @bind handleTabChange(evt, data) {
+  @bind handleTabChange(evt: *, data: *) {
     this.setState({tabIndex: data.activeIndex});
   }
 

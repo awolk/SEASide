@@ -1,5 +1,6 @@
+// @flow
 import React, {Component} from 'react';
 
-export default class FileExplorer extends Component {
+export default class FileExplorer extends Component<{}> {
 
 }

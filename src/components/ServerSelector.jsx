@@ -1,11 +1,17 @@
+// @flow
 import React, {Component} from 'react';
 import {Dropdown} from 'semantic-ui-react';
 import {bind} from 'decko';
 
 import serverConfig from '../config/servers.json';
 
-export default class ServerSelector extends Component {
-  @bind handleChange(event, data) {
+type Props = {
+  onChange: (server: string) => void,
+  selection: string
+};
+
+export default class ServerSelector extends Component<Props> {
+  @bind handleChange(event: *, data: *) {
     if (this.props.onChange)
       this.props.onChange(data.value);
   }
