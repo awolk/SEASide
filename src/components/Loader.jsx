@@ -4,24 +4,33 @@ import { Loader as SpinningLoader } from 'semantic-ui-react';
 import Connection from '../connection';
 
 type Props = {
+  method: 'password' | 'key',
   username: string,
-  password: string,
+  password?: string,
   host: string,
   onSuccess: (conn: Connection) => void,
-  onFailure: (err: string) => void
+  onFailure: (err?: string) => void
 };
 
 export default class Loader extends Component<Props> {
   componentDidMount() {
     const conn = new Connection(this.props.host);
-
-    conn.attemptLogin(this.props.username, this.props.password)
-      .then(() => {
-        this.props.onSuccess(conn);
-      })
-      .catch(err => {
-        this.props.onFailure('Unsuccessful Login');
-      });
+    if (this.props.method === 'password')
+      conn.attemptLogin(this.props.username, this.props.password)
+        .then(() => {
+          this.props.onSuccess(conn);
+        })
+        .catch(err => {
+          this.props.onFailure('Unsuccessful Login');
+        });
+    else
+      conn.attemptKeyLogin(this.props.username)
+        .then(() => {
+          this.props.onSuccess(conn);
+        })
+        .catch(err => {
+          this.props.onFailure();
+        });
   }
 
   render() {

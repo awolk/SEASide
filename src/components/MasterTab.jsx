@@ -7,11 +7,12 @@ import { bind } from 'decko';
 import Connection from "../connection";
 
 type Props = {
-  host: string
+  host: string,
+  username?: string
 };
 
 type State = {
-  state: 'unconnected' | 'loading' | 'connected',
+  state: 'unconnected' | 'loading-key' | 'loading-password' | 'connected',
   username?: string,
   password?: string,
   connection?: Connection,
@@ -23,9 +24,21 @@ export default class MasterTab extends Component<Props, State> {
     state: 'unconnected'
   };
 
+  componentDidMount() {
+    if (this.props.username != null)
+      this.setState({
+        state: 'loading-key',
+        username: this.props.username
+      });
+    else
+      this.setState({
+        state: 'unconnected'
+      })
+  }
+
   @bind attemptLogin(username: string, password: string) {
     this.setState({
-      state: 'loading',
+      state: 'loading-password',
       username,
       password
     });
@@ -38,7 +51,7 @@ export default class MasterTab extends Component<Props, State> {
     });
   }
 
-  @bind failedLogin(error: string) {
+  @bind failedLogin(error?: string) {
     this.setState({
       state: 'unconnected',
       error
@@ -49,15 +62,22 @@ export default class MasterTab extends Component<Props, State> {
     return (
       <div>
         {this.state.state === 'unconnected' &&
-          <Login error={this.state.error || ''} attemptLogin={this.attemptLogin}/>
+        <Login error={this.state.error || ''} attemptLogin={this.attemptLogin}/>
         }
-        {this.state.state === 'loading' &&
-          <Loader username={this.state.username || ''} password={this.state.password || ''} host={this.props.host}
+        {this.state.state === 'loading-key' &&
+          <Loader method='key'
+                  username={this.state.username || ''} host={this.props.host}
                   onSuccess={this.successfulLogin} onFailure={this.failedLogin}
           />
         }
-        {this.state.state === 'connected' &&
-          <Terminal connection={this.state.connection}/>
+        {this.state.state === 'loading-password' &&
+        <Loader method='password'
+                username={this.state.username || ''} password={this.state.password || ''} host={this.props.host}
+                onSuccess={this.successfulLogin} onFailure={this.failedLogin}
+        />
+        }
+        {this.state.state === 'connected' && this.state.connection &&
+        <Terminal connection={this.state.connection}/>
         }
       </div>
     );

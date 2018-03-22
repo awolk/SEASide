@@ -50,7 +50,7 @@ export default class Connection extends EventEmitter {
     this.client = new Client();
   }
 
-  attemptLogin(username: string, password: string): Promise<*> {
+  attemptLogin(username: string, password?: string): Promise<void> {
     return new Promise((resolve, reject) => {
       this.client.on('error', err => {
         // Authentication failed
@@ -68,6 +68,29 @@ export default class Connection extends EventEmitter {
         password
       });
     });
+  }
+
+  attemptKeyLogin(username: string): Promise<void> {
+    return new Promise((resolve, reject) => {
+      getPublicKey()
+        .then(pubKey => {
+          this.client.on('error', err => {
+            reject(err);
+          });
+          this.client.on('ready', () => {
+            // Authentication Successful
+            this.initializeShell()
+              .then(resolve)
+              .catch(reject);
+          });
+          this.client.connect({
+            host: this.server,
+            username,
+            privKeyPath
+          });
+        })
+        .catch(reject);
+    })
   }
 
   write(data: string) {
