@@ -29,6 +29,7 @@ export default class Loader extends Component<Props> {
           this.props.onSuccess(conn);
         })
         .catch(err => {
+          console.error(err);
           this.props.onFailure();
         });
   }

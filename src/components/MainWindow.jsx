@@ -1,11 +1,11 @@
 // @flow
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import 'semantic-ui-css/semantic.min.css';
 import { Grid, Tab } from 'semantic-ui-react';
 import ConnectionMenu from './ConnectionMenu';
 import MasterTab from "./MasterTab";
 import serverConfig from '../config/servers.json';
-import {bind} from 'decko';
+import { bind } from 'decko';
 
 type State = {
   tabs: Array<*>,
@@ -25,7 +25,7 @@ export default class MainWindow extends Component<{}, State> {
   }
 
   @bind handleConnect(server: string) {
-    const newTab = <MasterTab host={server}/>;
+    const newTab = <MasterTab host={server}/>; // username=''  to attempt public key authentication
     this.setState({
       tabs: this.state.tabs.concat({
         menuItem: server,
