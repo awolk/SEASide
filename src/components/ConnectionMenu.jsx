@@ -1,12 +1,11 @@
 // @flow
-import React, {Component} from 'react';
-import {Button, Grid} from 'semantic-ui-react';
+import React, { Component } from 'react';
+import { Menu, Button } from 'semantic-ui-react';
 import ServerSelector from './ServerSelector';
-import {bind} from 'decko';
 import serverConfig from '../config/servers.json';
 
 type Props = {
-  onConnect: (server: string) => void,
+  onConnect: (server: string, name: string) => void,
 };
 
 type State = {
@@ -18,26 +17,23 @@ export default class ConnectionMenu extends Component<Props, State> {
     server: serverConfig.defaultServer
   };
 
-  @bind handleClick() {
-    this.props.onConnect(this.state.server);
-  }
+  handleClick = () => {
+    this.props.onConnect(this.state.server, serverConfig.servers);
+  };
 
-  @bind handleChange(server: string) {
+  handleChange = (server: string) => {
     this.setState({server});
-  }
+  };
 
   render() {
     return (
-      <Grid.Row columns={2}>
-        <Grid.Column>
-          <Button fluid onClick={this.handleClick}>
-            Connect
-          </Button>
-        </Grid.Column>
-        <Grid.Column>
-          <ServerSelector selection={this.state.server} onChange={this.handleChange}/>
-        </Grid.Column>
-      </Grid.Row>
+      <Menu.Menu position='right'>
+        <ServerSelector selection={this.state.server} onChange={this.handleChange}/>
+
+        <Menu.Item>
+          <Button onClick={this.handleClick}>Connect</Button>
+        </Menu.Item>
+      </Menu.Menu>
     );
   }
 }

@@ -1,11 +1,10 @@
 // @flow
 import React, { Component } from 'react';
 import 'semantic-ui-css/semantic.min.css';
-import { Grid, Tab } from 'semantic-ui-react';
+import {Segment, Menu} from 'semantic-ui-react';
 import ConnectionMenu from './ConnectionMenu';
 import MasterTab from "./MasterTab";
 import serverConfig from '../config/servers.json';
-import { bind } from 'decko';
 
 type State = {
   tabs: Array<*>,
@@ -24,38 +23,41 @@ export default class MainWindow extends Component<{}, State> {
     this.handleConnect(serverConfig.defaultServer);
   }
 
-  @bind handleConnect(server: string) {
+  handleConnect = (server: string) => {
     const newTab = <MasterTab host={server}/>; // username=''  to attempt public key authentication
     this.setState({
-      tabs: this.state.tabs.concat({
-        menuItem: server,
-        pane: {
-          key: this.state.tabs.length,
-          content: newTab
-        }
-      }),
+      tabs: this.state.tabs.concat(newTab),
       tabIndex: this.state.tabs.length
     });
-  }
+  };
 
-  @bind handleTabChange(evt: *, data: *) {
-    this.setState({tabIndex: data.activeIndex});
-  }
+  handleChangeTab = (tabIndex: number) => {
+    this.setState({
+      tabIndex
+    });
+  };
 
   render() {
     return (
-      <div>
-        <Grid padded>
+      <div style={{height: '100%'}}>
+        <Menu attached='top'>
+          {this.state.tabs.map((tab, i) =>
+            <Menu.Item
+              key={i}
+              active={i === this.state.tabIndex}
+              onClick={this.handleChangeTab.bind(this, i)}
+              content={this.state.tabs[i]}
+            >
+              {tab.props.host}
+            </Menu.Item>
+          )}
           <ConnectionMenu onConnect={this.handleConnect}/>
-          <Grid.Row stretched centered padded>
-            <Tab
-              panes={this.state.tabs}
-              renderActiveOnly={false}
-              activeIndex={this.state.tabIndex}
-              onTabChange={this.handleTabChange}
-            />
-          </Grid.Row>
-        </Grid>
+        </Menu>
+        {this.state.tabs.map((tab, i) =>
+          <Segment attached='bottom' hidden={this.state.tabIndex !== i}>
+            {this.state.tabs[i]}
+          </Segment>
+        )}
       </div>
     );
   }

@@ -1,14 +1,13 @@
 // @flow
 
 import EventEmitter from 'events';
-import {Client} from 'ssh2';
+import { Client } from 'ssh2';
 import forge from 'node-forge';
 import mkdirp from 'mkdirp';
 import os from 'os';
 import path from 'path';
 import fs from 'fs';
-import {bind} from 'decko';
-import {SSH2Stream, SFTPStream} from 'ssh2-streams';
+import { SSH2Stream, SFTPStream } from 'ssh2-streams';
 
 const keyDir = path.join(os.homedir(), '.ssh');
 mkdirp.sync(keyDir); // make ~/.ssh folder if necessary
@@ -150,7 +149,7 @@ export default class Connection extends EventEmitter {
     });
   }
 
-  @bind initializeSFTP(): Promise<void> {
+  initializeSFTP = (): Promise<void> => {
     return new Promise((resolve, reject) => {
       this.client.sftp((err, sftp) => {
         if (err) return reject(err);
@@ -159,9 +158,9 @@ export default class Connection extends EventEmitter {
         resolve();
       })
     });
-  }
+  };
 
-  @bind installPublicKey(pubKey: string): Promise<void> {
+  installPublicKey = (pubKey: string): Promise<void> => {
     return new Promise((resolve, reject) => {
       if (!this.sftp)
         return reject();

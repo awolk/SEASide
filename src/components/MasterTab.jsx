@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 import Terminal from './Terminal';
 import Login from "./Login";
 import Loader from './Loader';
-import { bind } from 'decko';
 import Connection from "../connection";
 
 type Props = {
@@ -36,27 +35,27 @@ export default class MasterTab extends Component<Props, State> {
       })
   }
 
-  @bind attemptLogin(username: string, password: string) {
+  attemptLogin = (username: string, password: string) => {
     this.setState({
       state: 'loading-password',
       username,
       password
     });
-  }
+  };
 
-  @bind successfulLogin(connection: Connection) {
+  successfulLogin = (connection: Connection) => {
     this.setState({
       state: 'connected',
       connection
     });
-  }
+  };
 
-  @bind failedLogin(error?: string) {
+  failedLogin = (error?: string) => {
     this.setState({
       state: 'unconnected',
       error
     });
-  }
+  };
 
   render() {
     return (
