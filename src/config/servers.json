@@ -6,5 +6,5 @@
     {"name": "lnxsrv08", "address": "lnxsrv08.seas.ucla.edu"},
     {"name": "lnxsrv09", "address": "lnxsrv09.seas.ucla.edu"}
   ],
-  "defaultServer": "lnxsrv.seas.ucla.edu"
+  "defaultServer": {"name": "lnxsrv", "address": "lnxsrv.seas.ucla.edu"}
 }

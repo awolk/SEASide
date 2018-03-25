@@ -7,6 +7,7 @@ import Connection from "../connection";
 
 type Props = {
   host: string,
+  name: string,
   username?: string
 };
 
@@ -61,7 +62,7 @@ export default class MasterTab extends Component<Props, State> {
     return (
       <div>
         {this.state.state === 'unconnected' &&
-        <Login error={this.state.error || ''} attemptLogin={this.attemptLogin}/>
+          <Login error={this.state.error || ''} attemptLogin={this.attemptLogin}/>
         }
         {this.state.state === 'loading-key' &&
           <Loader method='key'

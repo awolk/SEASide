@@ -2,33 +2,35 @@
 import React, { Component } from 'react';
 import { Menu, Button } from 'semantic-ui-react';
 import ServerSelector from './ServerSelector';
-import serverConfig from '../config/servers.json';
+import { defaultServer } from '../config/servers.json';
 
 type Props = {
   onConnect: (server: string, name: string) => void,
 };
 
 type State = {
-  server: string
+  server: string,
+  name: string
 };
 
 export default class ConnectionMenu extends Component<Props, State> {
   state = {
-    server: serverConfig.defaultServer
+    server: defaultServer.address,
+    name: defaultServer.name
   };
 
   handleClick = () => {
-    this.props.onConnect(this.state.server, serverConfig.servers);
+    this.props.onConnect(this.state.server, this.state.name);
   };
 
-  handleChange = (server: string) => {
-    this.setState({server});
+  handleChange = (server: string, name: string) => {
+    this.setState({server, name});
   };
 
   render() {
     return (
       <Menu.Menu position='right'>
-        <ServerSelector selection={this.state.server} onChange={this.handleChange}/>
+        <ServerSelector selection={this.state.name} onChange={this.handleChange}/>
 
         <Menu.Item>
           <Button onClick={this.handleClick}>Connect</Button>
