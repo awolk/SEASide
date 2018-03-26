@@ -16,13 +16,11 @@ the UCLA SEASnet servers as easy as possible.
 ## File Structure
 - *assets/* - Holds images needed for application
 - *public/* - holds files to be copied to the build directory
-    - *index.html* - Principal web page to host the React app
     - *electron.js* - Electron's launch point, opens the main
-- *src/* - Holds main source of application
-    window and controls the application
+    - *index.html* - Principal web page to host the React app
+- *src/* - Holds main source of application window and controls the application
     - *components/* - React components
-        - *ConnectionMenu.jsx* - Holds connection button and server
-          selector
+        - *ConnectionMenu.jsx* - Holds connection button and server selector
         - *FileExplorer.jsx* - File explorer component
         - *Loader.jsx* - Establishes SSH connection while loading
         - *Login.jsx* - User login credentials form
@@ -38,10 +36,9 @@ the UCLA SEASnet servers as easy as possible.
     - *index.css* - Global CSS to affect all pages
     - *index.js* - React's launch point
     - *registerServiceWorker.js* - utility from `create-react-app`
-- *config-overrides.js* - change default configuration of webpack
-  from `create-react-app`
-- *package.json* - Description of dependencies and scripts to
-  test/build the application
+    - *SaveData.js* - contains fields which are saved when the
+- *config-overrides.js* - change default configuration of webpack from `create-react-app`
+- *package.json* - Description of dependencies and scripts to test/build the application
 
 ## Contributing
 General Guidelines:
