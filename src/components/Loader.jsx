@@ -1,7 +1,7 @@
 // @flow
 import React, {Component} from 'react';
 import { Loader as SpinningLoader } from 'semantic-ui-react';
-import Connection from '../connection';
+import Connection from '../Connection';
 
 type Props = {
   method: 'password' | 'key',

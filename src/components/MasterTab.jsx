@@ -3,7 +3,8 @@ import React, { Component } from 'react';
 import Terminal from './Terminal';
 import Login from "./Login";
 import Loader from './Loader';
-import Connection from "../connection";
+import Connection from "../Connection";
+import configuration from "../SaveData";
 
 type Props = {
   host: string,
@@ -45,6 +46,7 @@ export default class MasterTab extends Component<Props, State> {
   };
 
   successfulLogin = (connection: Connection) => {
+    configuration.username = this.state.username || ''; // Save default username
     this.setState({
       state: 'connected',
       connection

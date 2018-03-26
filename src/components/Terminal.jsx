@@ -2,7 +2,7 @@
 import React, {Component} from 'react';
 import {Terminal as XTerm} from 'xterm';
 import 'xterm/dist/xterm.css';
-import Connection from "../connection";
+import Connection from "../Connection";
 
 XTerm.applyAddon(require('xterm/dist/addons/fit/fit'));
 

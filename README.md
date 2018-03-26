@@ -34,7 +34,7 @@ the UCLA SEASnet servers as easy as possible.
         - *servers.json* - a list of selectable servers to connect to
     - *App.js* - The main React component
     - *App.test.js* - Tests for *App.js*
-    - *connection.js* - interface for SSH connection to SEASnet
+    - *Connection.js* - interface for SSH connection to SEASnet
     - *index.css* - Global CSS to affect all pages
     - *index.js* - React's launch point
     - *registerServiceWorker.js* - utility from `create-react-app`

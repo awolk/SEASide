@@ -1,10 +1,11 @@
 // @flow
 import React, { Component } from 'react';
 import 'semantic-ui-css/semantic.min.css';
-import {Segment, Menu} from 'semantic-ui-react';
+import { Segment, Menu } from 'semantic-ui-react';
 import ConnectionMenu from './ConnectionMenu';
 import MasterTab from "./MasterTab";
-import { defaultServer } from '../config/servers.json';
+import configuration from '../SaveData';
+import { servers } from '../config/servers';
 
 type State = {
   tabs: Array<*>,
@@ -18,11 +19,12 @@ export default class MainWindow extends Component<{}, State> {
   };
 
   componentDidMount() {
-    this.handleConnect(defaultServer.address, defaultServer.name);
+    const startingServer = servers[configuration.serverIndex];
+    this.handleConnect(startingServer.address, startingServer.name);
   }
 
   handleConnect = (server: string, name: string) => {
-    const newTab = <MasterTab host={server} name={name}/>; // username=''  to attempt public key authentication
+    const newTab = <MasterTab host={server} name={name} username={configuration.username}/>;
     this.setState({
       tabs: this.state.tabs.concat(newTab),
       tabIndex: this.state.tabs.length
