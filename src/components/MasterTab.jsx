@@ -1,12 +1,12 @@
 // @flow
 import React, { Component } from 'react';
-import SplitPane from 'react-split-pane';
 import Terminal from './Terminal';
 import FileExplorer from './FileExplorer';
 import Login from "./Login";
 import Loader from './Loader';
 import Connection from "../Connection";
 import configuration from "../SaveData";
+import styled from 'styled-components';
 
 type Props = {
   host: string,
@@ -83,10 +83,7 @@ export default class MasterTab extends Component<Props, State> {
       );
     else if (this.state.state === 'connected' && this.state.connection)
       return (
-        <SplitPane split='vertical' minSize={50} defaultSize={100}>
-            <FileExplorer/>
-            <Terminal connection={this.state.connection}/>
-        </SplitPane>
+        <Terminal connection={this.state.connection}/>
       );
   }
 }

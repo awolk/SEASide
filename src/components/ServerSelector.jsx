@@ -1,9 +1,11 @@
 // @flow
 import React, { Component } from 'react';
-import { Dropdown } from 'semantic-ui-react';
+import styled from 'styled-components';
 
 import { servers } from '../config/servers.json';
 const dropdownItems = servers.map((server, i) => ({text: server.name, value: i}));
+
+const Select = styled.select``;
 
 type Props = {
   onChange: (serverIndex: number) => void,
@@ -12,16 +14,16 @@ type Props = {
 
 export default class ServerSelector extends Component<Props> {
   handleChange = (event: *, data: *) => {
-    this.props.onChange(data.value);
+    this.props.onChange(event.target.value);
   };
 
   render() {
     return (
-      <Dropdown item basic
-                value={this.props.selection}
-                options={dropdownItems}
-                onChange={this.handleChange}
-      />
+      <Select onChange={this.handleChange}>
+        {dropdownItems.map((item, i) =>
+          <option value={item.value}>{item.text}</option>
+        )}
+      </Select>
     );
   }
 }

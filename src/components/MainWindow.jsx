@@ -1,11 +1,26 @@
 // @flow
 import React, { Component } from 'react';
-import 'semantic-ui-css/semantic.min.css';
-import { Segment, Menu } from 'semantic-ui-react';
+import styled from 'styled-components';
 import ConnectionMenu from './ConnectionMenu';
 import MasterTab from './MasterTab';
 import configuration from '../SaveData';
 import { servers } from '../config/servers';
+
+const Window = styled.div`
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+`;
+const TabMenu = styled.div`
+`;
+const Tab = styled.div`
+  flex-grow: 1;
+  background-color: lightgrey;
+  border-radius: .6rem;
+  margin: .6rem;
+  padding: .6rem;
+`;
 
 type State = {
   tabs: Array<*>,
@@ -39,25 +54,25 @@ export default class MainWindow extends Component<{}, State> {
 
   render() {
     return (
-      <div>
-        <Menu attached='top'>
+      <Window>
+        <TabMenu>
           {this.state.tabs.map((tab, i) =>
-            <Menu.Item
+            <button
               key={i}
               active={i === this.state.tabIndex}
               onClick={this.handleChangeTab.bind(this, i)}
             >
               {tab.props.name}
-            </Menu.Item>
+            </button>
           )}
           <ConnectionMenu onConnect={this.handleConnect}/>
-        </Menu>
+        </TabMenu>
         {this.state.tabs.map((tab, i) =>
-          <Segment key={i} attached='bottom' hidden={this.state.tabIndex !== i}>
+          <Tab key={i} hidden={this.state.tabIndex !== i}>
             {this.state.tabs[i]}
-          </Segment>
+          </Tab>
         )}
-      </div>
+      </Window>
     );
   }
 };

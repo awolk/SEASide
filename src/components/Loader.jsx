@@ -1,6 +1,5 @@
 // @flow
 import React, {Component} from 'react';
-import { Loader as SpinningLoader } from 'semantic-ui-react';
 import Connection from '../Connection';
 
 type Props = {
@@ -35,6 +34,6 @@ export default class Loader extends Component<Props> {
   }
 
   render() {
-    return <SpinningLoader active inline='centered'/>
+    return <span>Loading...</span>;
   }
 }

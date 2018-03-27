@@ -1,6 +1,19 @@
 // @flow
 import React, { Component } from 'react';
-import { Message, Input, Form, Grid } from 'semantic-ui-react';
+import styled from 'styled-components';
+
+const Form = styled.form`
+  text-align: center;
+  padding: 1rem;
+  bottom: 0;
+`;
+const Message = styled.div`
+  text-align: center;
+`;
+const Input = styled.input`
+  margin: .3rem;
+`;
+const Button = styled.button``;
 
 type Props = {
   error: ?string,
@@ -36,41 +49,34 @@ export default class Login extends Component<Props, State> {
   };
 
   componentDidMount() {
-    if (this.inputRef)
-      this.inputRef.focus();
+    // if (this.inputRef)
+    //   this.inputRef.focus();
   }
 
   render() {
     return (
-      <Grid centered padded>
-        <Form error={!!this.props.error}>
-          <Message
-            error
-            content={this.props.error}
-          />
-          <Form.Field>
-            <Input
+        <Form>
+          <Message>{this.props.error}</Message><br/>
+          <Input
               required
               placeholder='Username'
               value={this.state.username}
               onChange={this.handleUsername}
               ref={input => this.inputRef = input}
-            />
-          </Form.Field>
-          <Form.Input
+            /><br/>
+          <Input
             placeholder='Password'
             type='password'
             value={this.state.password}
             onChange={this.handlePassword}
-          />
-          <Form.Button
+          /><br/>
+          <Button
             type='submit'
             onClick={this.handleLogin}
           >
             Login
-          </Form.Button>
+          </Button>
         </Form>
-      </Grid>
     )
   }
 }

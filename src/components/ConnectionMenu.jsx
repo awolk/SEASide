@@ -1,9 +1,12 @@
 // @flow
 import React, { Component } from 'react';
-import { Menu, Button } from 'semantic-ui-react';
+import styled from 'styled-components';
+
 import ServerSelector from './ServerSelector';
 import configuration from '../SaveData';
 import { servers } from '../config/servers';
+
+const Button = styled.button``;
 
 type Props = {
   onConnect: (server: string, name: string) => void,
@@ -30,13 +33,10 @@ export default class ConnectionMenu extends Component<Props, State> {
 
   render() {
     return (
-      <Menu.Menu position='right'>
+      <div>
         <ServerSelector selection={this.state.serverIndex} onChange={this.handleChange}/>
-
-        <Menu.Item>
-          <Button onClick={this.handleClick}>Connect</Button>
-        </Menu.Item>
-      </Menu.Menu>
+        <Button onClick={this.handleClick}>Connect</Button>
+      </div>
     );
   }
 }
