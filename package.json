@@ -9,6 +9,8 @@
     "node-forge": "^0.7.4",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
+    "react-split-pane": "^0.1.77",
+    "react-ui-tree": "^3.1.0",
     "semantic-ui-css": "^2.3.0",
     "semantic-ui-react": "^0.78.3",
     "ssh2": "^0.6.0",

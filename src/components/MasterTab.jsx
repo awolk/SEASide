@@ -1,6 +1,8 @@
 // @flow
 import React, { Component } from 'react';
+import SplitPane from 'react-split-pane';
 import Terminal from './Terminal';
+import FileExplorer from './FileExplorer';
 import Login from "./Login";
 import Loader from './Loader';
 import Connection from "../Connection";
@@ -61,27 +63,30 @@ export default class MasterTab extends Component<Props, State> {
   };
 
   render() {
-    return (
-      <div>
-        {this.state.state === 'unconnected' &&
-          <Login error={this.state.error || ''} attemptLogin={this.attemptLogin}/>
-        }
-        {this.state.state === 'loading-key' &&
-          <Loader method='key'
-                  username={this.state.username || ''} host={this.props.host}
-                  onSuccess={this.successfulLogin} onFailure={this.failedLogin}
-          />
-        }
-        {this.state.state === 'loading-password' &&
+    if (this.state.state === 'unconnected')
+      return (
+        <Login error={this.state.error || ''} attemptLogin={this.attemptLogin}/>
+      );
+    else if (this.state.state === 'loading-key')
+      return (
+        <Loader method='key'
+                username={this.state.username || ''} host={this.props.host}
+                onSuccess={this.successfulLogin} onFailure={this.failedLogin}
+        />
+      );
+    else if (this.state.state === 'loading-password')
+      return (
         <Loader method='password'
                 username={this.state.username || ''} password={this.state.password || ''} host={this.props.host}
                 onSuccess={this.successfulLogin} onFailure={this.failedLogin}
         />
-        }
-        {this.state.state === 'connected' && this.state.connection &&
-        <Terminal connection={this.state.connection}/>
-        }
-      </div>
-    );
+      );
+    else if (this.state.state === 'connected' && this.state.connection)
+      return (
+        <SplitPane split='vertical' minSize={50} defaultSize={100}>
+            <FileExplorer/>
+            <Terminal connection={this.state.connection}/>
+        </SplitPane>
+      );
   }
 }

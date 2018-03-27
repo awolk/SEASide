@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import 'semantic-ui-css/semantic.min.css';
 import { Segment, Menu } from 'semantic-ui-react';
 import ConnectionMenu from './ConnectionMenu';
-import MasterTab from "./MasterTab";
+import MasterTab from './MasterTab';
 import configuration from '../SaveData';
 import { servers } from '../config/servers';
 
@@ -39,7 +39,7 @@ export default class MainWindow extends Component<{}, State> {
 
   render() {
     return (
-      <div style={{height: '100%'}}>
+      <div>
         <Menu attached='top'>
           {this.state.tabs.map((tab, i) =>
             <Menu.Item
