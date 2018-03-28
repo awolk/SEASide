@@ -5,7 +5,9 @@ import styled from 'styled-components';
 import { servers } from '../config/servers.json';
 const dropdownItems = servers.map((server, i) => ({text: server.name, value: i}));
 
-const Select = styled.select``;
+const Select = styled.select`
+  flex: 1;
+`;
 
 type Props = {
   onChange: (serverIndex: number) => void,
@@ -19,8 +21,8 @@ export default class ServerSelector extends Component<Props> {
 
   render() {
     return (
-      <Select onChange={this.handleChange}>
-        {dropdownItems.map((item, i) =>
+      <Select onChange={this.handleChange} value={this.props.selection}>
+        {dropdownItems.map(item =>
           <option value={item.value}>{item.text}</option>
         )}
       </Select>

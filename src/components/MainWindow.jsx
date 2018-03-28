@@ -11,15 +11,36 @@ const Window = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-`;
-const TabMenu = styled.div`
-`;
-const Tab = styled.div`
-  flex-grow: 1;
-  background-color: lightgrey;
-  border-radius: .6rem;
-  margin: .6rem;
   padding: .6rem;
+  background-color: #F5F5F6;
+`;
+
+function TabMenuItem({onClick, active, children}) {
+  const baseStyle: Object = {
+    padding: '.6rem',
+    paddingBottom: '.8rem',
+    borderTopLeftRadius: '.2rem',
+    borderTopRightRadius: '.2rem'
+  };
+  const activeStyle = Object.assign({backgroundColor: '#e0e0e0'}, baseStyle);
+  const inactiveStyle = Object.assign({backgroundColor: 'white'}, baseStyle);
+  return (
+    <a
+      onClick={onClick}
+      style={active ? activeStyle : inactiveStyle}
+    >
+      {children}
+    </a>
+  );
+}
+
+const Tab = styled.div`
+  flex: 1;
+  background-color: #e0e0e0;
+  border-radius: .6rem;
+  padding: .6rem;
+  margin-bottom: 1.2rem;
+  text-align: center;
 `;
 
 type State = {
@@ -55,18 +76,18 @@ export default class MainWindow extends Component<{}, State> {
   render() {
     return (
       <Window>
-        <TabMenu>
+        <ConnectionMenu onConnect={this.handleConnect}/>
+        <div style={{marginTop: '.7rem'}}>
           {this.state.tabs.map((tab, i) =>
-            <button
+            <TabMenuItem
               key={i}
               active={i === this.state.tabIndex}
               onClick={this.handleChangeTab.bind(this, i)}
             >
               {tab.props.name}
-            </button>
+            </TabMenuItem>
           )}
-          <ConnectionMenu onConnect={this.handleConnect}/>
-        </TabMenu>
+        </div>
         {this.state.tabs.map((tab, i) =>
           <Tab key={i} hidden={this.state.tabIndex !== i}>
             {this.state.tabs[i]}

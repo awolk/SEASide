@@ -6,7 +6,16 @@ import ServerSelector from './ServerSelector';
 import configuration from '../SaveData';
 import { servers } from '../config/servers';
 
-const Button = styled.button``;
+const Row = styled.div`
+  display: flex;
+  flex-direction: row;
+  margin: .5rem 0;
+`;
+
+const Button = styled.button`
+  flex: 1;
+  margin-right: 1rem;
+`;
 
 type Props = {
   onConnect: (server: string, name: string) => void,
@@ -33,10 +42,10 @@ export default class ConnectionMenu extends Component<Props, State> {
 
   render() {
     return (
-      <div>
-        <ServerSelector selection={this.state.serverIndex} onChange={this.handleChange}/>
+      <Row>
         <Button onClick={this.handleClick}>Connect</Button>
-      </div>
+        <ServerSelector selection={this.state.serverIndex} onChange={this.handleChange}/>
+      </Row>
     );
   }
 }

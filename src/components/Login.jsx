@@ -49,8 +49,8 @@ export default class Login extends Component<Props, State> {
   };
 
   componentDidMount() {
-    // if (this.inputRef)
-    //   this.inputRef.focus();
+    if (this.inputRef)
+      this.inputRef.focus();
   }
 
   render() {
@@ -62,7 +62,7 @@ export default class Login extends Component<Props, State> {
               placeholder='Username'
               value={this.state.username}
               onChange={this.handleUsername}
-              ref={input => this.inputRef = input}
+              innerRef={input => this.inputRef = input}
             /><br/>
           <Input
             placeholder='Password'
