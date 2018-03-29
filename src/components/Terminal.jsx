@@ -46,7 +46,7 @@ export default class Terminal extends Component<Props> {
 
   render() {
     return (
-      <div ref={termElement => this.termElement = termElement}/>
+      <div ref={termElement => this.termElement = termElement} style={{flexGrow: 1}}/>
     );
   }
 }

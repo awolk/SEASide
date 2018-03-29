@@ -89,7 +89,7 @@ export default class MainWindow extends Component<{}, State> {
           )}
         </div>
         {this.state.tabs.map((tab, i) =>
-          <Tab key={i} hidden={this.state.tabIndex !== i}>
+          <Tab key={i} style={{display: this.state.tabIndex === i ? 'flex' : 'none'}}>
             {this.state.tabs[i]}
           </Tab>
         )}
