@@ -34,6 +34,13 @@ function TabMenuItem({onClick, active, children}) {
   );
 }
 
+const TabMenu = styled.div`
+  margin-top: .7rem;
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: -.45rem;
+`;
+
 const Tab = styled.div`
   flex: 1;
   background-color: #e0e0e0;
@@ -77,7 +84,7 @@ export default class MainWindow extends Component<{}, State> {
     return (
       <Window>
         <ConnectionMenu onConnect={this.handleConnect}/>
-        <div style={{marginTop: '.7rem'}}>
+        <TabMenu>
           {this.state.tabs.map((tab, i) =>
             <TabMenuItem
               key={i}
@@ -87,7 +94,7 @@ export default class MainWindow extends Component<{}, State> {
               {tab.props.name}
             </TabMenuItem>
           )}
-        </div>
+        </TabMenu>
         {this.state.tabs.map((tab, i) =>
           <Tab key={i} style={{display: this.state.tabIndex === i ? 'flex' : 'none'}}>
             {this.state.tabs[i]}
